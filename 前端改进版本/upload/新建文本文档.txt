@@ -1,0 +1,10 @@
+<?php
+$ds = DIRECTORY_SEPARATOR;//1
+$storeFolder = '.\\upload\\';//2
+if (!empty($_FILES)) {
+    $tempFile = $_FILES['file']['tmp_name']; //3?如果将文件发送到页面，则将文件对象存储到临时变量????????????
+    $targetPath = dirname( __FILE__ ) . $ds. $storeFolder . $ds; //4创建目标文件夹的绝对路径
+    $targetFile = $targetPath. $_FILES['file']['name']; //5创建上载文件目标的绝对路径
+    move_uploaded_file($tempFile,$targetFile); //6将上传的文件移至目的地
+}
+?>?????

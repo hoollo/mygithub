@@ -1,0 +1,21 @@
+.transform-button {
+    color: #fff;
+    border: 0;
+    font-size: 18px;
+    outline: none;
+    padding: 0.8em 1.5em;
+    background: #ace;
+    border-radius: 4px;
+    /*设置文字阴影*/
+    text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+    /*设置边框阴影*/
+    box-shadow: 0 4px 0 #9cb8d8, 0 3px 20px rgba(0,0,0,0.3);
+    /*交互性，鼠标移上变小手*/
+    cursor: pointer;
+}
+/*按钮整个按下去*/
+.simple-button:active {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2) inset;
+    position: relative;
+    top: 3px;
+}

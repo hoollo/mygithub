@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <title>震图</title>
+    <link media="all" type="text/css" rel="stylesheet" href="bootstrap3.1.1/css/bootstrap.min.css">
+    <link media="all" type="text/css" rel="stylesheet" href="css/style.css">
+    <link media="all" type="text/css" rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="./css/basic.min.css" type="text/css">
+    <link rel="stylesheet" href="./css/dropzone.min.css" type="text/css">
+    <link rel="stylesheet" href="./css/buttons.css" type="text/css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/backtop.js"></script>
+
+    <style>
+        .fileupload-box p {
+            margin: 5px 0 0 5px;
+
+        }
+
+        .img-box img {
+            width: 120px;
+            height: 120px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- 背景动画 -->
+<canvas id="c_n9" width="1920" height="990"
+        style="position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.5;"></canvas>
+<script src="js/canvas-nest.min.js"></script>
+
+
+<div class="navbar navbar-default navbar-fixed-top mainhead-navbox" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle mainhead-navbtn" data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                <span class="sr-only">菜单导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+
+        <div class="navbar-collapse collapse mainhead-collapse">
+            <ul class="nav mainhead-nav">
+                <li class='active'><a href="index.html" title='主页'>主页</a></li>
+                <li><a href="tutorial.html" title='教程'>教程</a></li>
+                <li><a href="login.html" title="登陆">登陆</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <div class="container">
+        <div class="title">
+            <h1>上传图片 | <a class="text-warning" href="#" data-toggle="modal" data-target="#feedback">联系</a></h1>
+            <br/><br/>
+            <form method="post" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<p style="text-align: center">
+    <a class="button button-glow button-border button-rounded button-primary">校正</a>
+</p>
+
+<!-- Modal -->
+<div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">问题反馈</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>反馈服务：<a id="service">震图</a></label>
+                    </div>
+                    <div class="col-md-12">
+                        <label>问题描述：</label>
+                        <textarea id="content" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <label>联系邮箱：</label>
+                        <input id="contact" class="form-control" placeholder="xxxx@xxx.xx"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="submit" type="button" class="btn btn-primary" onclick="feedback()">提交反馈</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>查看一下教程右侧帮助或许对你有帮助O(∩_∩)O</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var service = '图片自动校正';
+
+    function feedback() {
+        $.ajax({
+            url: '/feedback',
+            type: 'POST',
+            dataType: 'json',
+            data:
+                {
+                    'service': $('#service').html(),
+                    'content': $('#content').val(),
+                    'contact': $('#contact').val()
+                }
+        })
+            .done(function (data) {
+                //console.log("success");
+                $('#feedback').modal('hide');
+                $('#content').val('');
+                if (data) {
+                    alert('感谢你的反馈，我们会努力做到最好~');
+                } else {
+                    alert(data.desc);
+                }
+            })
+            .fail(function () {
+                //console.log("error");
+                alert('对不起，提交失败了~');
+            })
+            .always(function () {
+                //console.log("complete");
+            });
+    }
+</script>
+
+<div class="container">
+    <div class="mainfoot center">
+        <p>
+            &copy;2019 特斯拉小组 &nbsp; &nbsp; <a href='login.html' title='关于我们'>关于我们</a> &nbsp; &nbsp; <a href='login.html'
+                                                                                                       title='联系我们'>联系我们</a>
+        </p>
+        <div class='row'>
+            <div class='row partnerbox'>
+                <a href="login.html" title='手机应用'>手机应用</a> &nbsp;
+                <a href="login.html" title='意见反馈'>意见反馈</a> &nbsp;
+                <a href="login.html" title='联系我们'>联系我们</a> &nbsp;
+                <a href="login.html" target="使用条款" title="使用条款">使用条款</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="bootstrap3.1.1/js/bootstrap.min.js"></script>
+<script src="./js/dropzone.js"></script>
+<script src="js/dropzone.min.js"></script>
+
+<script>
+    Dropzone.autoDiscover = false;//防止报"Dropzone already attached."的错误
+    $(".dropzone").dropzone({
+        url: "file-upload.php",//文件提交地址
+        method: "post",
+        parallelUploads: 10,
+        paramName: "file",
+
+        maxThumbnailFilesize: 10,
+        thumbnailWidth: 120,
+        thumbnailHeight: 120,
+        thumbnailMethod: "crop",
+        filesizeBase: 1e3,
+        ignoreHiddenFiles: !0,
+        acceptedFiles: ".jpg,.png,.jpeg",
+        addRemoveLinks: true,
+        previewsContainer: null,
+        hiddenInputContainer: "body",
+        capture: null,
+        renameFile: null,
+        forceFallback: !1,
+
+        dictDefaultMessage: "Drop files here to upload",
+        dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
+        dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
+        dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
+        dictInvalidFileType: "You can't upload files of this type.",
+        dictResponseError: "Server responded with {{statusCode}} code.",
+        dictCancelUpload: "Cancel upload",
+        dictUploadCanceled: "Upload canceled.",
+        dictCancelUploadConfirmation: "Are you sure you want to cancel this upload?",
+        dictRemoveFile: "Remove",
+        dictRemoveFileConfirmation: null,
+        dictMaxFilesExceeded: "You can not upload any more files.",
+        dictFileSizeUnits: {tb: "TB", gb: "GB", mb: "MB", kb: "KB", b: "b"},
+        init: function () {
+            this.on("success", function (file) {
+                console.log("File " + file.name + "uploaded");
+            });
+            this.on("removedfile", function (file) {
+                console.log("File " + file.name + "removed");
+            });
+        }
+    })
+
+    //FreeSubmit
+    $('#submitFreeForm').ajaxForm({
+        beforeSerialize: modifyData,  //edit var
+        beforeSubmit: beforeSubmit,
+        success: complete,  // post-submit callback
+        dataType: 'json',
+    });
+
+    function beforeSubmit() {
+        if (isRequest == 1) return false;
+        $('#free_button').addClass('disabled');
+        $('#pay_button').addClass('disabled');
+
+        if (ismobile) {
+            var h = $(document).height() - $(window).height() - 200;
+            $(document).scrollTop(h);
+        }
+
+        $('#resultFrame').removeClass('hidden');
+        $('#result').html('...系统处理中...请稍后...（如果页数较多，则时间较长）');
+        isRequest = 1;
+        return true;
+    }
+</script>
+
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5cadee24c41cc604"></script>
+
+
+</body>
+</html>

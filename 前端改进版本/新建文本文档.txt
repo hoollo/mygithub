@@ -1,0 +1,8 @@
+<?php
+$upload_dir='F:/untitled-副本/upload/';
+if
+(!move_uploaded_file($_FILES['file']['tmp_name'],$upload_dir.$_FILES['file']['name']))
+    echo "文件上传失败，错误信息：".$_FILES['file']['error']."<br>";
+else
+    echo "文件".$_FILES['file']['name']."上传成功<br>";
+?>
